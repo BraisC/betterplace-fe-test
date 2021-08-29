@@ -20,7 +20,8 @@ Given an integer `n`, where `1 <= n <= 10^7` and a list of friends' scores of le
  What are the function's time & space complexities?
  
  *Answer*:
- ```txt
+ ```
+ The complexity in O notation is O(n^2)
 
  ```
 

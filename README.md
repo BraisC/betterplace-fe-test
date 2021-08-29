@@ -35,8 +35,6 @@ Take a look at the component `PaypalButton`, located in `/src/PaypalButton.js`.
 2. What issues with it can you spot?
     *Answer*:
     ```
-    We need to bind both 'createOrderOrBillingAgreement' and 'sleepUntilSubmitted' to the component instance as they use 'this' inside them.
-
     The sleep function doesn't need to be async as it already returns a promise and doesn't use await inside.
 
     Inside 'createOrderOrBillingAgreement' it would be better to check if isValid before calling 'sleepUntilSubmitted'

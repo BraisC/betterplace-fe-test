@@ -12,12 +12,6 @@ const buttonStyle = {
 };
 
 class PaypalButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.createOrderOrBillingAgreement = this.createOrderOrBillingAgreement.bind(this);
-    this.sleepUntilSubmitted = this.sleepUntilSubmitted.bind(this);
-  }
-
   createOrderOrBillingAgreement = async () => {
     this.props.formik.submitForm(); // submit will call api with form values and inject _paypal_token into the form values
     if (this.props.formik.isValid) this.props.formik.setSubmitting(true);

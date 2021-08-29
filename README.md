@@ -34,7 +34,16 @@ Take a look at the component `PaypalButton`, located in `/src/PaypalButton.js`.
 1. Take a look at the component PaypalButton, located in /src/PaypalButton.js.
 2. What issues with it can you spot?
     *Answer*:
-    ```txt
+    ```
+    We need to bind both 'createOrderOrBillingAgreement' and 'sleepUntilSubmitted' to the component instance as they use 'this' inside them.
+
+    The sleep function doesn't need to be async as it already returns a promise and doesn't use await inside.
+
+    Inside 'createOrderOrBillingAgreement' it would be better to check if isValid before calling 'sleepUntilSubmitted'
+
+    It would be better to disable the button while isSubmitting instead of hiding it, and we can get rid of both divs surrounding it
+
+    Fundingicons property doesn't seem to exist on Paypal SDK
 
     ```
 3. Re-factor the class component into a functional component, while applying improvements regarding the problems you noted before and any other optimizations.

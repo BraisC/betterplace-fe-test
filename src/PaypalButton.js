@@ -4,7 +4,7 @@ import { connect } from "formik";
 
 const buttonStyle = {
   color: "gold",
-  fundingicons: false,
+ //fundingicons: false, //This style property doesnt exist in the paypal sdk
   label: "checkout",
   shape: "rect",
   size: "responsive",
@@ -12,10 +12,16 @@ const buttonStyle = {
 };
 
 class PaypalButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.createOrderOrBillingAgreement = this.createOrderOrBillingAgreement.bind(this);
+    this.sleepUntilSubmitted = this.sleepUntilSubmitted.bind(this);
+  }
+
   createOrderOrBillingAgreement = async () => {
     this.props.formik.submitForm(); // submit will call api with form values and inject _paypal_token into the form values
-    await this.sleepUntilSubmitted();
     if (this.props.formik.isValid) this.props.formik.setSubmitting(true);
+    await this.sleepUntilSubmitted();
     return this.props.formik.values._paypal_token;
   };
 
@@ -28,6 +34,7 @@ class PaypalButton extends React.Component {
 
   onApprove = () => {
     // do something on success
+    this.props.formik.setSubmitting(false);
   };
 
   render = () => {
@@ -38,21 +45,21 @@ class PaypalButton extends React.Component {
     const { isSubmitting } = this.props.formik;
 
     return (
-      <div>
-        <div style={(isSubmitting && { display: "none" }) || {}}>
-          <Button
-            commit
-            env="sandbox"
-            createBillingAgreement={this.createOrderOrBillingAgreement}
-            onApprove={this.onApprove}
-            onCancel={() => this.props.formik.setSubmitting(false)}
-            onError={() => this.props.formik.setSubmitting(false)}
-            style={buttonStyle}
-          />
-        </div>
-      </div>
+      <Button
+        commit
+        env="sandbox"
+        createBillingAgreement={this.createOrderOrBillingAgreement}
+        onApprove={this.onApprove}
+        onCancel={() => this.props.formik.setSubmitting(false)}
+        onError={() => this.props.formik.setSubmitting(false)}
+        style={buttonStyle}
+        disabled={isSubmitting}
+      />
     );
   };
 }
 
 export default connect(PaypalButton);
+
+
+
